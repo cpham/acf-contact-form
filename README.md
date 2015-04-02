@@ -5,6 +5,9 @@ This is an extension for Advanced Custom Fields 5 which enables you to create a 
 ##Requirements
 - Advanced Custom Fields 5
 
+##Future Additions
+- Custom Email Templates
+- More field support
  
 ##Supported Fields
 Currently, this plugin supports all fields with simple string values, as well as the Select and Post Object fields. This includes:
