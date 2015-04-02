@@ -1,6 +1,6 @@
 # Advanced Custom Fields Contact Form Extension
 
-This is an extension for Advanced Custom Fields 5 which enables you to create a contact form using ane existing Field Group in ACF. It will also add a new post to a Custom Post Type of your choosing.
+This is an extension for Advanced Custom Fields 5 which enables you to create a contact form using an existing Field Group in ACF. It will also add a new post to a Custom Post Type of your choosing.
 
 ##Requirements
 - Advanced Custom Fields 5
