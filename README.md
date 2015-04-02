@@ -4,6 +4,7 @@ This is an extension for Advanced Custom Fields 5 for Wordpress, which enables y
 
 ##Requirements
 - Advanced Custom Fields 5
+- jQuery
 
 ##Future Additions
 - Custom Email Templates
