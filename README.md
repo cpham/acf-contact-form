@@ -1,6 +1,6 @@
 # Advanced Custom Fields Contact Form Extension
 
-This is an extension for Advanced Custom Fields 5 which enables you to create a contact form using an existing Field Group in ACF. It will also add a new post to a Custom Post Type of your choosing.
+This is an extension for Advanced Custom Fields 5 for Wordpress, which enables you to create a contact form using an existing Field Group in ACF. It will also add a new post to a Custom Post Type of your choosing.
 
 ##Requirements
 - Advanced Custom Fields 5
@@ -49,7 +49,7 @@ I will add support for all other fields in the future.
 
 To place a form in your page content, use this shortcode, and use the ID number of the Form Rule you want to use from your ACF Form options page. Example: [acf_contact id="1"] 
 
-To use it within your template add this before any other HTML (before get_header()):
+To use it within your template, add this before any other HTML (before get_header()):
   <?php acf_form_head(); ?>
   
 Then add this where you want the form to appear: <?php do_shortcode('[acf_content id="1"]'); ?>
