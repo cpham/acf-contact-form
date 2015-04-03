@@ -1,7 +1,7 @@
 <?php
 
 	//add acf_form_head() before header if form shortcode is in post content.
-	function acf_contact_display_form_head(  ) {
+	function acf_contact_display_form_head() {
 
 		global $post;
 
