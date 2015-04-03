@@ -12,7 +12,7 @@
 		}
 	}
 
-	add_action( 'get_header', ' acf_contact_display_form_head' );
+	add_action( 'get_header', 'acf_contact_display_form_head' );
 
 
 	//[acf_contact] shortcode
