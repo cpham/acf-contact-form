@@ -20,7 +20,6 @@ Currently, this plugin supports the following fields:
 - Radio Field
 - Post Object Field
 - Tabs
-- Columns (Using the Advanced Custom Fields: Column Add-On)
 - Text Area
 - Number
 - URL
