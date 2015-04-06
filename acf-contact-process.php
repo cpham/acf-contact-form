@@ -9,19 +9,13 @@
 		foreach($forms as $form) {
 			if($post_type == $form['post_type']) {
 
-
-
-
 				$title = $form['title'];
 
 				$title = str_replace('newpost', $post_id, $title);
 				$title = do_shortcode($title);
 				$post = array("post_title" => $title, 'ID' => $post_id);
 
-
 				wp_update_post($post);
-
-
 
 				$headers = array('Content-Type: text/html; charset=UTF-8');
 
@@ -47,7 +41,21 @@
 								$message .= '</div>';
 							}
 						}
-
+						elseif($field['type'] == 'textarea') {
+							$message .= strip_tags($value, '<br><br/>');
+							
+						}
+						elseif(($field['type'] == 'image' || $field['type'] == 'file') && $field['return_format'] == 'array') {
+							
+							
+							$message .= $value['url'];
+							
+						}
+						elseif(($field['type'] == 'image' || $field['type'] == 'file') && $field['return_format'] == 'id') {
+							
+							$message .= wp_get_attachment_url($value);
+							
+						}
 						elseif($field['type'] == 'select' && $field['multiple'] == 1) {
 
 							foreach($value as $options) {
