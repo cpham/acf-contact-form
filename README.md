@@ -11,7 +11,7 @@ This is an extension for Advanced Custom Fields 5 for Wordpress, which enables y
 - More field support
  
 ##Supported Fields
-Currently, this plugin supports all fields with simple string values, as well as the Select and Post Object fields. This includes:
+Currently, this plugin supports the following fields:
 
 - Text Field
 - Email Field
@@ -25,6 +25,10 @@ Currently, this plugin supports all fields with simple string values, as well as
 - Number
 - URL
 - Page Link
+- Image*
+- File*
+
+*BE AWARE: Image and file fields use the wordpress media library if the user is currently signed in as a wordpress user. This may expose other images and files you have in your media library.
 
 I will add support for all other fields in the future.
 
