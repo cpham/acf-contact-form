@@ -56,4 +56,4 @@ To place a form in your page content, use this shortcode, and use the ID number 
 To use it within your template, add this before any other HTML (before get_header()):
   <?php acf_form_head(); ?>
   
-Then add this where you want the form to appear: <?php do_shortcode('[acf_content id="1"]'); ?>
+Then add this where you want the form to appear: <?php do_shortcode('[acf_contact id="1"]'); ?>
