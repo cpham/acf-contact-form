@@ -13,7 +13,9 @@
 
 				$title = str_replace('newpost', $post_id, $title);
 				$title = do_shortcode($title);
-				$post = array("post_title" => $title, 'ID' => $post_id);
+
+				$slug = str_replace(' ', '-',  strtolower($title));
+				$post = array("post_title" => $title, 'ID' => $post_id, 'post_name' => $slug);
 
 				wp_update_post($post);
 
@@ -43,18 +45,18 @@
 						}
 						elseif($field['type'] == 'textarea') {
 							$message .= strip_tags($value, '<br><br/>');
-							
+
 						}
 						elseif(($field['type'] == 'image' || $field['type'] == 'file') && $field['return_format'] == 'array') {
-							
-							
+
+
 							$message .= $value['url'];
-							
+
 						}
 						elseif(($field['type'] == 'image' || $field['type'] == 'file') && $field['return_format'] == 'id') {
-							
+
 							$message .= wp_get_attachment_url($value);
-							
+
 						}
 						elseif($field['type'] == 'select' && $field['multiple'] == 1) {
 
