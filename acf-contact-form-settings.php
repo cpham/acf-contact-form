@@ -146,6 +146,29 @@
 								'multiple' => 0,
 							),
 							array (
+								'key' => 'field_5523e73203d9a',
+								'label' => 'Submit Text',
+								'name' => 'submit_text',
+								'prefix' => '',
+								'type' => 'text',
+								'instructions' => '',
+								'required' => 0,
+								'conditional_logic' => 0,
+								'wrapper' => array (
+									'width' => '',
+									'class' => '',
+									'id' => '',
+								),
+								'default_value' => '',
+								'placeholder' => '',
+								'prepend' => '',
+								'append' => '',
+								'maxlength' => '',
+								'readonly' => 0,
+								'disabled' => 0,
+							),
+
+							array (
 								'key' => 'field_551c7142bb822',
 								'label' => 'Don\'t Send Email',
 								'name' => 'no_email',
@@ -160,7 +183,7 @@
 									'id' => '',
 								),
 								'message' => '',
-								'default_value' => 0,
+								'default_value' => 'Submit',
 							),
 						),
 					),
@@ -219,7 +242,7 @@
 			function acf_load_field_groups( $field ) {
 
 				// reset choices
-				$groups = get_posts(array("post_type" => "acf-field-group"));
+				$groups = get_posts(array("post_type" => "acf-field-group", 'posts_per_page'=>-1, 'numberposts'=>-1));
 
 				foreach($groups as $group)  {
 
