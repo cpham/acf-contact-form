@@ -1,6 +1,6 @@
 <?php
 	function save_inquiry( $post_id ) {
-
+		if(!wp_is_post_revision( $post_id )) {
 		$forms = get_field('forms','option');
 
 		$post_type = get_post_field('post_type', $post_id);
@@ -70,6 +70,17 @@
 							}
 
 						}
+						elseif($field['type'] == 'user') {
+							if($field['multiple'] == 0) {
+								$message .= $value['display_name'];
+							}
+
+							else {
+								foreach($value as $user) {
+									$message .= $user['display_name'];
+								}
+							}
+						}
 
 						else {
 							$message .= $field['value'];
@@ -93,7 +104,7 @@
 		}
 		return $post_id;
 
-
+		}
 	}
 
 	add_action('acf/save_post', 'save_inquiry', 20);
