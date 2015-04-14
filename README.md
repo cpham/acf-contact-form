@@ -1,4 +1,4 @@
-# Advanced Custom Fields Contact Form Extension
+# Advanced Custom Fields Contact Form Extension (Beta)
 
 This is an extension for Advanced Custom Fields 5 for Wordpress, which enables you to create a contact form using an existing Field Group in ACF. It will also add a new post to a Custom Post Type of your choosing.
 
