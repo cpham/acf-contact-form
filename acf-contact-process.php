@@ -39,7 +39,7 @@
 		switch($type) {
 			case "repeater":
 
-				$message .= '<table class="table table-striped">';
+				$message .= '<table class="table table-striped" style="width: 100%;">';
 					$message .= acf_cf_format_subfield($value, $field['key'], $field['sub_fields'], $field['label'], $post_id);
 				$message .= '</table>';
 
