@@ -23,6 +23,11 @@ Currently, this plugin supports the following fields:
 - Text Area
 - Number
 - URL
+- Repeater
+- User
+- Taxonomy
+- oEmbed (links to edit post screen in wp-admin)
+- Password 
 - Page Link
 - Image*
 - File*
