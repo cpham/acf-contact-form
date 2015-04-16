@@ -167,6 +167,36 @@
 								'readonly' => 0,
 								'disabled' => 0,
 							),
+							array (
+								'key' => 'field_552ecdbabf9a7',
+								'label' => 'Template',
+								'name' => 'template',
+								'prefix' => '',
+								'type' => 'select',
+								'instructions' => '- Templates can be placed within a directory in your current theme directory named "acf-cf-templates" <br />
+					- Name your template according to the following convention: "acf-cf-[TITLE].php"
+					',
+								'required' => 0,
+								'conditional_logic' => 0,
+								'wrapper' => array (
+									'width' => '',
+									'class' => '',
+									'id' => '',
+								),
+								'choices' => array (
+									'' => '',
+								),
+								'default_value' => array (
+									'' => '',
+								),
+								'allow_null' => 1,
+								'multiple' => 0,
+								'ui' => 0,
+								'ajax' => 0,
+								'placeholder' => '',
+								'disabled' => 0,
+								'readonly' => 0,
+							),
 
 							array (
 								'key' => 'field_551c7142bb822',
@@ -204,6 +234,35 @@
 				'instruction_placement' => 'label',
 				'hide_on_screen' => '',
 			));
+
+
+
+			function acf_load_templates( $field ) {
+
+				// reset choices
+				$files = scandir(get_template_directory() . '/acf-cf-templates');
+
+				if(!empty($files)) {
+					foreach($files as $file) {
+						if(substr($file, 0, 7) === 'acf-cf-') {
+
+							$value = str_replace(array('acf-cf-', '.php'), '', $file);
+							$field['choices'][ $value ] = $value;
+
+						}
+					}
+
+				}
+
+
+				// return the field
+				return $field;
+
+			}
+
+			add_filter('acf/load_field/key=field_552ecdbabf9a7', 'acf_load_templates');
+
+
 
 
 

@@ -33,7 +33,11 @@ if( function_exists('acf_add_options_page') ) {
 
 	//Add options to settings page
 	require_once('acf-contact-form-settings.php');
+	require_once('acf-contact-render-email.php');
 	require_once('acf-contact-process.php');
+
 	require_once('acf-contact-shortcode.php');
 }
+
+
 ?>
