@@ -48,4 +48,109 @@
 	}
 
 	add_action('acf/save_post', 'save_inquiry', 20);
-?>
+	
+function acf_cf_akismet ($content) {
+
+	// innocent until proven guilty
+	$isSpam = FALSE;
+	
+	$content = (array) $content;
+	
+	if (function_exists('akismet_init')) {
+		
+		$wpcom_api_key = get_option('wordpress_api_key');
+		
+		if (!empty($wpcom_api_key)) {
+		
+			global $akismet_api_host, $akismet_api_port;
+
+			// set remaining required values for akismet api
+			$content['user_ip'] = preg_replace( '/[^0-9., ]/', '', $_SERVER['REMOTE_ADDR'] );
+			$content['user_agent'] = $_SERVER['HTTP_USER_AGENT'];
+			$content['referrer'] = $_SERVER['HTTP_REFERER'];
+			$content['blog'] = get_option('home');
+			
+			if (empty($content['referrer'])) {
+				$content['referrer'] = get_permalink();
+			}
+			
+			$queryString = '';
+			
+			foreach ($content as $key => $data) {
+				if (!empty($data)) {
+					$queryString .= $key . '=' . urlencode(stripslashes($data)) . '&';
+				}
+			}
+			
+			$response = akismet_http_post($queryString, $akismet_api_host, '/1.1/comment-check', $akismet_api_port);
+			
+			if ($response[1] == 'true') {
+				update_option('akismet_spam_count', get_option('akismet_spam_count') + 1);
+				$isSpam = TRUE;
+			}
+			
+		}
+		
+	}
+	
+	return $isSpam;
+
+}
+
+
+
+function acf_cf_validate_spam( $valid, $value, $field, $input ) {
+	
+	
+	//check if it's an akismet field
+	
+	$class = $field['wrapper']['class'];
+	
+	if(strpos($class, 'akismet') !== false) {
+		// bail early if value is already invalid
+		if( !$valid ) {
+			
+			return $valid;
+			
+		}
+		
+		if(!empty($value)) {
+		
+			$content = array();
+			
+			if($class == 'akismet-message') {
+				$content['comment_content'] = $value;
+			} 
+			
+			else if ($class == 'akismet-email') {
+				$content['comment_author_email'] = $value;
+			}
+			
+			else if ($class == 'akismet-name') {
+				$content['comment_author'] = $value;
+			}
+			
+			else if ($class = 'akismet-url') {
+				$content['comment_author_url'] = $value;
+			}
+			
+			$isSpam = acf_cf_akismet($content);
+			
+			if($isSpam === TRUE || strpos($value, '<script') !== false ) {
+				$valid = 'Spam detected!';
+			}
+			
+			
+		}
+		
+		
+		
+	}
+	
+			
+	return $valid;
+
+}
+
+
+add_filter('acf/validate_value', 'acf_cf_validate_spam', 10, 4);
