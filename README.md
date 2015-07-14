@@ -7,7 +7,6 @@ This is an extension for Advanced Custom Fields 5 for Wordpress, which enables y
 - jQuery
 
 ##Future Additions
-- Custom Email Templates
 - More field support
  
 ##Supported Fields
@@ -53,6 +52,14 @@ I will add support for all other fields in the future.
   - Recipient Email: Enter the email address you would like form submissions to be sent to.
   - Return URL: Select the wordpress page you would like form submissions to redirect to, such as a Thank You page.
   - Don't Send Email: Check this box if you only want to record form submissions in WordPress, without sending an email
+
+##Akismet Spam Filtering 
+To enable Akismet validation in your form, add the following classes to the corresponding form fields you would like to validate, under "Wrapper Attributes." You must have Akismet enabled.
+
+  - akismet-name
+  - akismet-email
+  - akismet-url
+  - akismet-message
 
 ##Placing a form in your page
 
