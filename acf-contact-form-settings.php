@@ -238,7 +238,7 @@
 
 
 			function acf_load_templates( $field ) {
-
+				if(file_exists(get_template_directory() . '/acf-cf-templates')) {
 				// reset choices
 				$files = scandir(get_template_directory() . '/acf-cf-templates');
 
@@ -255,8 +255,11 @@
 				}
 
 
+				}
+				
 				// return the field
 				return $field;
+				
 
 			}
 
