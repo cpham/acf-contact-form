@@ -49,7 +49,7 @@
 	 			  });</script>";
 		echo '<div id="acf_contactform'.$f["group"] . '">';
 
-		acf_form(array('submit_value'=> $f["submit_text"], 'return' => $f["return_url"],'post_id' => 'new_post','new_post' => $post, 'field_groups' => array($f["group"])) );
+		acf_form(array('submit_value'=> $f["submit_text"], 'return' => $f["return_url"],'post_id' => 'new_post','new_post' => $post, 'uploader' => 'basic', 'field_groups' => array($f["group"])) );
 
 		echo '</div>';
 		return $form;
