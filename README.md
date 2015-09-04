@@ -52,6 +52,17 @@ I will add support for all other fields in the future.
   - Return URL: Select the wordpress page you would like form submissions to redirect to, such as a Thank You page.
   - Don't Send Email: Check this box if you only want to record form submissions in WordPress, without sending an email
 
+##Custom Email Templates
+To send emails using a custom HTML template, simply create a template using `the_field()` and `get_field()` functions provided by ACF to display the custom field values from the form submission. This feature is helpful if you need to parse the form data before it gets emailed to you.
+
+Example: 
+
+    <p><?php the_field('first_name'); ?> <?php the_field('last_name'); ?> has submitted an inquiry.</p>
+
+- Templates must be placed within a directory in your current theme named "acf-cf-templates" 
+- Name your template according to the following convention: "acf-cf-[TITLE].php" ([TITLE] can be anything you want)
+- Templates will appear under the Template dropdown in the ACF Forms options page. Select the template you want to use for each form.
+
 ##Akismet Spam Filtering 
 To enable Akismet validation in your form, add the following classes to the corresponding form fields you would like to validate, under "Wrapper Attributes." You must have Akismet enabled.
 
