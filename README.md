@@ -31,7 +31,6 @@ Currently, this plugin supports the following fields:
 - Image*
 - File*
 
-*BE AWARE: Image and file fields use the wordpress media library if the user is currently signed in as a wordpress user. This may expose other images and files you have in your media library.
 
 I will add support for all other fields in the future.
 
