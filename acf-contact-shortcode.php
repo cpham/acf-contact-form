@@ -13,18 +13,33 @@
 	}
 
 	add_action( 'get_header', 'acf_contact_display_form_head' );
-
+	
 
 	//[acf_contact] shortcode
 	function acf_contact_shortcode( $atts ) {
 
-
+		$url = acf_get_current_url();
+		
+		// default shortcode attribute values 
+		// refer to ACF documentation for acf_form() parameters http://www.advancedcustomfields.com/resources/acf_form/ 
+		
 		$a = shortcode_atts( array(
-				'id' =>  1
+				'id' =>  "1",
+				'form_attributes'		=> array(),
+				'html_before_fields'	=> '',
+				'html_after_fields'		=> '',
+				'submit_value'			=> __("Submit", 'acf'),
+				'updated_message'		=> __("Thank you", 'acf'),
+				'label_placement'		=> 'top',
+				'instruction_placement'	=> 'label',
+				'field_el'			=> 'div',
+				'uploader'			=> 'basic',
+				'return'				=> add_query_arg( 'updated', 'true', $url ),
+				
 			), $atts );
-
-		$form_id = $a['id'] - 1;
-
+		
+		
+		$form_id = $a['id'] - 1; 
 
 		$forms = get_field('forms','option');
 
@@ -49,7 +64,24 @@
 	 			  });</script>";
 		echo '<div id="acf_contactform'.$f["group"] . '">';
 
-		acf_form(array('submit_value'=> $f["submit_text"], 'return' => $f["return_url"],'post_id' => 'new_post','new_post' => $post, 'uploader' => 'basic', 'field_groups' => array($f["group"])) );
+		acf_form(
+			array(
+				'post_id'				=> 'new_post',
+				'field_groups' 		=> array($f["group"]), 
+				'new_post' 			=> $post, 
+				'form_attributes'		=> $a['form_attributes'],
+				'html_before_fields'	=> $a['html_before_fields'],
+				'html_after_fields'		=> $a['html_after_fields'],
+				'submit_value'			=> $a['submit_value'],
+				'updated_message'		=> $a['updated_message'],
+				'label_placement'		=> $a['label_placement'],
+				'instruction_placement'	=> $a['instruction_placement'],
+				'field_el'			=> $a['field_el'],
+				'uploader'			=> $a['uploader'],
+				'return'				=> $a['return']
+			
+			
+		));
 
 		echo '</div>';
 		return $form;
