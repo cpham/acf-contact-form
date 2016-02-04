@@ -25,6 +25,24 @@
 						'sub_fields' =>
 						array (
 							array (
+								'key' => 'field_56b3746edd903',
+								'label' => 'Basic Settings',
+								'name' => 'basic_settings',
+								'type' => 'tab',
+								'instructions' => '',
+								'required' => 0,
+								'conditional_logic' => 0,
+								'wrapper' => array (
+									'width' => '',
+									'class' => '',
+									'id' => '',
+								),
+								'placement' => 'top',
+								'endpoint' => 0,
+							),
+							//POST TYPE 
+							
+							array (
 								'key' => 'field_551c587df4125',
 								'label' => 'Post Type',
 								'name' => 'post_type',
@@ -52,6 +70,9 @@
 								'disabled' => 0,
 								'readonly' => 0,
 							),
+							
+							//FIELD GROUP
+							
 							array (
 								'key' => 'field_551c5885f4126',
 								'label' => 'Field Group',
@@ -80,6 +101,9 @@
 								'disabled' => 0,
 								'readonly' => 0,
 							),
+							
+							//POST TITLE / SUBJECT LINE
+							
 							array (
 								'key' => 'field_551c589cf4127',
 								'label' => 'Title',
@@ -99,7 +123,7 @@
 									'class' => '',
 									'id' => '',
 								),
-								'default_value' => '',
+								'default_value' => 'New Form Submission',
 								'placeholder' => '',
 								'prepend' => '',
 								'append' => '',
@@ -107,13 +131,34 @@
 								'readonly' => 0,
 								'disabled' => 0,
 							),
+							
+							array (
+								'key' => 'field_56b374efdd906',
+								'label' => 'Admin Email Settings',
+								'name' => 'admin_email_settings',
+								'type' => 'tab',
+								'instructions' => '',
+								'required' => 0,
+								'conditional_logic' => 0,
+								'wrapper' => array (
+									'width' => '',
+									'class' => '',
+									'id' => '',
+								),
+								'placement' => 'top',
+								'endpoint' => 0,
+							),
+
+							
+							//ADMIN EMAIL ADDRESS
+							
 							array (
 								'key' => 'field_551c5e84069f1',
-								'label' => 'Recipient Email',
+								'label' => 'Admin Email',
 								'name' => 'email',
 								'prefix' => '',
-								'type' => 'email',
-								'instructions' => '',
+								'type' => 'text',
+								'instructions' => 'Comma separate email addresses where form submissions should be sent',
 								'required' => 1,
 								'conditional_logic' => 0,
 								'wrapper' => array (
@@ -126,13 +171,16 @@
 								'prepend' => '',
 								'append' => '',
 							),
+							
+							// DONT SEND ADMIN EMAIL
+							
 							array (
-								'key' => 'field_551c6daa90dd3',
-								'label' => 'Return URL',
-								'name' => 'return_url',
+								'key' => 'field_551c7142bb822',
+								'label' => 'Don\'t Send Admin Email',
+								'name' => 'no_email',
 								'prefix' => '',
-								'type' => 'page_link',
-								'instructions' => 'Choose which page to redirect to upon form completion, such as a Thank You or Confirmation Page',
+								'type' => 'true_false',
+								'instructions' => 'Check this box if you only want to record form submissions in WordPress, without sending an email',
 								'required' => 0,
 								'conditional_logic' => 0,
 								'wrapper' => array (
@@ -140,36 +188,15 @@
 									'class' => '',
 									'id' => '',
 								),
-								'post_type' => '',
-								'taxonomy' => '',
-								'allow_null' => 0,
-								'multiple' => 0,
+								'message' => '',
+								'default_value' => 0,
 							),
-							array (
-								'key' => 'field_5523e73203d9a',
-								'label' => 'Submit Text',
-								'name' => 'submit_text',
-								'prefix' => '',
-								'type' => 'text',
-								'instructions' => '',
-								'required' => 0,
-								'conditional_logic' => 0,
-								'wrapper' => array (
-									'width' => '',
-									'class' => '',
-									'id' => '',
-								),
-								'default_value' => 'Submit',
-								'placeholder' => '',
-								'prepend' => '',
-								'append' => '',
-								'maxlength' => '',
-								'readonly' => 0,
-								'disabled' => 0,
-							),
+							
+							// ADMIN EMAIL TEMPLATE
+							
 							array (
 								'key' => 'field_552ecdbabf9a7',
-								'label' => 'Template',
+								'label' => 'Admin Email Template',
 								'name' => 'template',
 								'prefix' => '',
 								'type' => 'select',
@@ -197,14 +224,84 @@
 								'disabled' => 0,
 								'readonly' => 0,
 							),
-
+							
 							array (
-								'key' => 'field_551c7142bb822',
-								'label' => 'Don\'t Send Email',
-								'name' => 'no_email',
+								'key' => 'field_56b37507dd908',
+								'label' => 'Customer Email Settings',
+								'name' => '',
+								'type' => 'tab',
+								'instructions' => '',
+								'required' => 0,
+								'conditional_logic' => 0,
+								'wrapper' => array (
+									'width' => '',
+									'class' => '',
+									'id' => '',
+								),
+								'placement' => 'top',
+								'endpoint' => 0,
+							),
+							
+							//CUSTOMER EMAIL ADDRESS
+							
+							array (
+								'key' => 'field_551csdsd9sd39',
+								'label' => 'Customer Email',
+								'name' => 'customeremail',
+								'prefix' => '',
+								'type' => 'text',
+								'instructions' => 'Name of field where customer email is inputted',
+								'required' => 1,
+								'conditional_logic' => 0,
+								'wrapper' => array (
+									'width' => '',
+									'class' => '',
+									'id' => '',
+								),
+								'default_value' => 'email',
+								'placeholder' => '',
+								'prepend' => '',
+								'append' => '',
+							),
+							
+							//CUSTOMER EMAIL SUBJECT TITLE
+							
+							array (
+								'key' => 'field_551c5f932je34',
+								'label' => 'Customer Email Title',
+								'name' => 'customertitle',
+								'prefix' => '',
+								'type' => 'text',
+								'instructions' => '	This will  be used as the subject line of the customer email.<br />
+									<strong>To use a custom field value, use the ACF shortcode, and use "newpost" for the post_id attribute.</strong> <br />
+									
+											Example: <em>Thank you for your inquiry, [acf field="first_name" post_id="newpost"] [acf field="last_name" post_id="newpost"]</em>',
+								'required' => 0,
+								'conditional_logic' => 0,
+								'wrapper' => array (
+									'width' => '',
+									'class' => '',
+									'id' => '',
+								),
+								'default_value' => 'Thank you for your inquiry,',
+								'placeholder' => '',
+								'prepend' => '',
+								'append' => '',
+								'maxlength' => '',
+								'readonly' => 0,
+								'disabled' => 0,
+							),
+							
+							
+							//DON'T SEND CUSTOMER EMAIL
+							
+							array (
+								'key' => 'field_551c714abw32',
+								'label' => 'Don\'t Send Customer Email',
+								'name' => 'no_customeremail',
 								'prefix' => '',
 								'type' => 'true_false',
-								'instructions' => 'Check this box if you only want to record form submissions in WordPress, without sending an email',
+								'instructions' => 'Check this box if you only want to record form submissions in WordPress, without sending an email to the customer',
 								'required' => 0,
 								'conditional_logic' => 0,
 								'wrapper' => array (
@@ -213,8 +310,46 @@
 									'id' => '',
 								),
 								'message' => '',
-								'default_value' => 0,
+								'default_value' => 1,
 							),
+							
+							
+							
+							
+							//CUSTOMER EMAIL TEMPLATE
+							
+							array (
+								'key' => 'field_552easr32ea7',
+								'label' => 'Customer Email Template',
+								'name' => 'customertemplate',
+								'prefix' => '',
+								'type' => 'select',
+								'instructions' => '- Templates can be placed within a directory in your current theme directory named "acf-cf-templates" <br />
+					- Name your template according to the following convention: "acf-cf-[TITLE].php"
+					',
+								'required' => 0,
+								'conditional_logic' => 0,
+								'wrapper' => array (
+									'width' => '',
+									'class' => '',
+									'id' => '',
+								),
+								'choices' => array (
+									'' => '',
+								),
+								'default_value' => array (
+									'' => '',
+								),
+								'allow_null' => 1,
+								'multiple' => 0,
+								'ui' => 0,
+								'ajax' => 0,
+								'placeholder' => '',
+								'disabled' => 0,
+								'readonly' => 0,
+							),
+
+							
 						),
 					),
 				),
@@ -264,6 +399,7 @@
 			}
 
 			add_filter('acf/load_field/key=field_552ecdbabf9a7', 'acf_load_templates');
+			add_filter('acf/load_field/key=field_552easr32ea7', 'acf_load_templates');
 
 
 
