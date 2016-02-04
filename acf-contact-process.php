@@ -1,54 +1,107 @@
 <?php
 
+// UPDATE POST AND SEND EMAILS
 
-	function save_inquiry( $post_id ) {
-		if(!wp_is_post_revision( $post_id )) {
-		$forms = get_field('forms','option');
+function save_inquiry( $post_id ) {
+	if(!wp_is_post_revision( $post_id )) {
+	$forms = get_field('forms','option');
 
-		$post_type = get_post_field('post_type', $post_id);
-
-
-
-		foreach($forms as $form) {
-			if($post_type == $form['post_type']) {
-
-				$title = $form['title'];
-
-				$title = str_replace('newpost', $post_id, $title);
-				$title = do_shortcode($title);
-
-				$slug = str_replace(' ', '-',  strtolower($title));
-				$post = array("post_title" => $title, 'ID' => $post_id, 'post_name' => $slug);
-
-				wp_update_post($post);
-
-				$headers = array('Content-Type: text/html; charset=UTF-8');
+	$post_type = get_post_field('post_type', $post_id);
 
 
-				$subject = $title . ' (' . $post_id . ')';
+		if(!empty($forms)) {
+			foreach($forms as $form) {
+				if($post_type == $form['post_type']) {
+	
+					$title = $form['title'];
+					$customertitle = $form['customertitle'];
+	
+					$title = str_replace('newpost', $post_id, $title);
+					$title = do_shortcode($title);
+	
+					$slug = str_replace(' ', '-',  strtolower($title));
+					$post = array("post_title" => $title, 'ID' => $post_id, 'post_name' => $slug);
+					wp_update_post($post);
+					
+					
+					//CREATE RANDOM KEY TO PREVENT UNAUTHORIZED VIEWING OF EMAIL CONTENTS 
+					
+					$rand = rand(12300,90300); //generate random number
+					$key = dechex($rand); //convert random number to hex
 
-				$email_html = site_url() . '?acf-cf-email=' . $post_id;
-				if(!empty($form['template'])) {
-					$email_html = $email_html . '&template=' . $form['template'];
+					//STORE KEY IN META
+					update_post_meta($post_id, 'acfcf-key', $key);
+					
+					
+	
+					$headers = array('Content-Type: text/html; charset=UTF-8');
+	
+					$subject = $title . ' (' . $post_id . ')';
+
+					$customersubject = $title . ' (' . $post_id . ')';
+	
+					
+
+					//CHECK FOR ADMIN EMAIL TEMPLATE
+					
+					$email_html = site_url() . '?acf-cf-email=' . $post_id . '&key=' . $key;	
+										
+					if(!empty($form['template'])) {
+						$email_html = $email_html . '&template=' . $form['template'];
+					}
+					
+
+					//CHECK FOR CUSTOMER EMAIL TEMPLATE
+
+					$customeremail_html = site_url() . '?acf-cf-customeremail=' . $post_id . '&key=' . $key;	
+
+					if(!empty($form['customertemplate'])) {
+						$customeremail_html = $customeremail_html . '&customertemplate=' . $form['customertemplate'];
+					} 
+					
+					$message = file_get_contents($email_html);
+					$customermessage = file_get_contents($customeremail_html);
+				
+					//SEND CUSTOMER EMAIL 
+					
+					if($form['no_customeremail'] == false) {
+	
+						$recipient = get_field($form['customeremail'], $post_id);
+						
+						$cmail = wp_mail($recipient, $customertitle, $customermessage, $headers );
+
+						update_post_meta($post_id, 'customer_email_sent', $cmail); //log whether or not the customer email was sent (1 = success, 0 = failure)
+	
+					}
+			
+			
+					//SEND ADMIN EMAIL
+					
+					if($form['no_email'] == false) {
+	
+						$recipient = $form['email'];
+	
+						$mail = wp_mail($recipient, $subject, $message, $headers );
+						
+						update_post_meta($post_id, 'admin_email_sent', $mail); //log whether or not the admin email was sent (1 = success, 0 = failure)
+
+	
+					}
+					
+	
 				}
-				$message = file_get_contents($email_html);
-				if($form['no_email'] == false) {
-
-					$recipient = $form['email'];
-
-					$mail = wp_mail($recipient, $subject, $message, $headers );
-
-				}
-
 			}
-		}
-		return $post_id;
-
+			return $post_id;
 		}
 	}
+}
 
-	add_action('acf/save_post', 'save_inquiry', 20);
-	
+add_action('acf/save_post', 'save_inquiry', 20);
+
+
+
+//AKISMET VALIDATION
+
 function acf_cf_akismet ($content) {
 
 	// innocent until proven guilty
@@ -117,7 +170,6 @@ function acf_cf_validate_spam( $valid, $value, $field, $input ) {
 		if(!empty($value)) {
 		
 			$content = array();
-			
 			if($class == 'akismet-message') {
 				$content['comment_content'] = $value;
 			} 
