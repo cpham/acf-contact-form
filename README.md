@@ -8,6 +8,8 @@ This is an extension for Advanced Custom Fields 5 for Wordpress, which enables y
 
 ##Future Additions
 - More field support
+- Preview email template
+- Export form submissions
  
 ##Supported Fields
 Currently, this plugin supports the following fields:
