@@ -8,7 +8,7 @@ function save_inquiry( $post_id ) {
 
 	$post_type = get_post_field('post_type', $post_id);
 
-
+		
 		if(!empty($forms)) {
 			foreach($forms as $form) {
 				if($post_type == $form['post_type']) {
@@ -97,6 +97,45 @@ function save_inquiry( $post_id ) {
 }
 
 add_action('acf/save_post', 'save_inquiry', 20);
+
+
+//ADD PREVIEW LINKS TO EDIT SCREEN
+
+add_action('edit_form_after_title', function ( $post )
+{
+	
+      
+		$forms = get_field('forms','option');
+		
+		foreach($forms as $form) {
+			if($form['post_type'] == $post->post_type) {
+				$key = get_post_meta($post->ID, 'acfcf-key', true);
+				$email_html = site_url() . '?acf-cf-email=' . $post->ID . '&key=' . $key;	
+										
+				if(!empty($form['template'])) {
+					$email_html = $email_html . '&template=' . $form['template'];
+				}
+				
+				if($form['no_email'] == false) {
+					echo '<p><a href="' . $email_html . '" target="_blank">Preview Admin Email</a></p>';
+				}
+				
+				
+				
+				$customeremail_html = site_url() . '?acf-cf-customeremail=' . $post->ID . '&key=' . $key;	
+				if(!empty($form['customertemplate'])) {
+					$customeremail_html = $customeremail_html . '&customertemplate=' . $form['customertemplate'];
+				} 
+				
+				if($form['no_customeremail'] == false) {
+					echo '<p><a href="' . $customeremail_html . '" target="_blank">Preview Admin Email</a></p>';
+				}
+				
+				
+			}	
+			
+		}
+});
 
 
 
