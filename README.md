@@ -62,7 +62,9 @@ To send emails using a custom HTML template, simply create a template using `the
 
 Example: 
 
-    <p><?php the_field('first_name'); ?> <?php the_field('last_name'); ?> has submitted an inquiry.</p>
+ ```html+php
+ <p><?php the_field('first_name'); ?> <?php the_field('last_name'); ?> has submitted an inquiry.</p>
+```
 
 - Templates must be placed within a directory in your current theme named "acf-cf-templates" 
 - Name your template according to the following convention: "acf-cf-[TITLE].php" ([TITLE] can be anything you want)
@@ -94,6 +96,10 @@ These parameters are taken from the acf_form() function parameters - please refe
 ###Placing a form in your theme 
 
 To use it within your template, add this before any other HTML (before get_header()):
-  <?php acf_form_head(); ?>
-  
-Then add this where you want the form to appear: <?php do_shortcode('[acf_contact id="1"]'); ?>
+ ```html+php
+ <?php acf_form_head(); ?>
+ ``` 
+Then add this where you want the form to appear: 
+```html+php
+<?php do_shortcode('[acf_contact id="1"]'); ?>
+```
