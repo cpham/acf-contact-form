@@ -128,7 +128,7 @@ add_action('edit_form_after_title', function ( $post )
 				} 
 				
 				if($form['no_customeremail'] == false) {
-					echo '<p><a href="' . $customeremail_html . '" target="_blank">Preview Admin Email</a></p>';
+					echo '<p><a href="' . $customeremail_html . '" target="_blank">Preview Customer Email</a></p>';
 				}
 				
 				
