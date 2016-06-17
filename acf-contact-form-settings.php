@@ -373,9 +373,9 @@
 
 
 			function acf_load_templates( $field ) {
-				if(file_exists(get_template_directory() . '/acf-cf-templates')) {
+				if(file_exists(get_stylesheet_directory() . '/acf-cf-templates')) {
 				// reset choices
-				$files = scandir(get_template_directory() . '/acf-cf-templates');
+				$files = scandir(get_stylesheet_directory() . '/acf-cf-templates');
 
 				if(!empty($files)) {
 					foreach($files as $file) {
