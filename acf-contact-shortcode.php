@@ -17,7 +17,13 @@
 
 	//[acf_contact] shortcode
 	function acf_contact_shortcode( $atts ) {
-
+		//This code uses acf_form() function which immediately outputs form html
+		//messing up the admin view of the page containing the shortcode
+		//For this reason I check if the current page "is_admin" page and return 
+		//immediately to avoid shortcode rendering.
+		if ( is_admin() )
+                        return false;
+                        
 		$url = acf_get_current_url();
 		
 		// default shortcode attribute values 
