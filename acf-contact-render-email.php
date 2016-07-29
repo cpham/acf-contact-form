@@ -240,7 +240,7 @@
 	
 			} else {
 				$template = $_GET['template'];
-				$template = get_template_directory() . '/acf-cf-templates/acf-cf-' . $template . '.php';
+				$template = get_stylesheet_directory() . '/acf-cf-templates/acf-cf-' . $template . '.php';
 				require_once($template);
 	
 			}
@@ -308,7 +308,7 @@
 	
 			} else {
 				$template = $_GET['customertemplate'];
-				$template = get_template_directory() . '/acf-cf-templates/acf-cf-' . $template . '.php';
+				$template = get_stylesheet_directory() . '/acf-cf-templates/acf-cf-' . $template . '.php';
 				require_once($template);
 	
 			}

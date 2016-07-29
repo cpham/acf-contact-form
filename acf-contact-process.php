@@ -34,7 +34,7 @@ function save_inquiry( $post_id ) {
 					
 					
 	
-					$headers = array('Content-Type: text/html; charset=UTF-8');
+					$headers = array('Content-Type: text/html; charset=UTF-8', 'From: '.get_bloginfo('name').' <noreply@'.$_SERVER['HTTP_HOST'].'>');
 	
 					$subject = $title . ' (' . $post_id . ')';
 
