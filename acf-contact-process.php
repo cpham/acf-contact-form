@@ -59,20 +59,18 @@ function save_inquiry( $post_id ) {
 						$customeremail_html = $customeremail_html . '&customertemplate=' . $form['customertemplate'];
 					}
 
-					$messageProc = curl_init($email_html);
-					curl_setopt($messageProc, CURLOPT_HEADER, 0);
-					curl_setopt($messageProc, CURLOPT_RETURNTRANSFER,1);
-					curl_setopt($messageProc,CURLOPT_CONNECTTIMEOUT,1);
-					$message = curl_exec($messageProc);
-					$customerEmailProc = curl_init($customeremail_html);
-					curl_setopt($customerEmailProc, CURLOPT_HEADER, 0);
-					curl_setopt($customerEmailProc, CURLOPT_RETURNTRANSFER,1);
-					curl_setopt($customerEmailProc,CURLOPT_CONNECTTIMEOUT,1);
-					$customermessage = curl_exec($customerEmailProc);
 
 					//SEND CUSTOMER EMAIL
 
 					if($form['no_customeremail'] == false) {
+
+						// FETCH CUSTOMER EMAIL USING CURL
+
+						$customerEmailProc = curl_init($customeremail_html);
+						curl_setopt($customerEmailProc, CURLOPT_HEADER, 0);
+						curl_setopt($customerEmailProc, CURLOPT_RETURNTRANSFER,1);
+						curl_setopt($customerEmailProc,CURLOPT_CONNECTTIMEOUT,1);
+						$customermessage = curl_exec($customerEmailProc);
 
 						$recipient = get_field($form['customeremail'], $post_id);
 
@@ -86,6 +84,15 @@ function save_inquiry( $post_id ) {
 					//SEND ADMIN EMAIL
 
 					if($form['no_email'] == false) {
+
+						// FETCH ADMIN EMAIL USING CURL
+
+						$messageProc = curl_init($email_html);
+						curl_setopt($messageProc, CURLOPT_HEADER, 0);
+						curl_setopt($messageProc, CURLOPT_RETURNTRANSFER,1);
+						curl_setopt($messageProc,CURLOPT_CONNECTTIMEOUT,1);
+						$message = curl_exec($messageProc);
+
 
 						$recipient = $form['email'];
 
