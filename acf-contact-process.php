@@ -103,38 +103,39 @@ add_action('acf/save_post', 'save_inquiry', 20);
 
 add_action('edit_form_after_title', function ( $post )
 {
-	
-      
 		$forms = get_field('forms','option');
-		
-		foreach($forms as $form) {
-			if($form['post_type'] == $post->post_type) {
-				$key = get_post_meta($post->ID, 'acfcf-key', true);
-				$email_html = site_url() . '?acf-cf-email=' . $post->ID . '&key=' . $key;	
-										
-				if(!empty($form['template'])) {
-					$email_html = $email_html . '&template=' . $form['template'];
-				}
+		if($forms != null){
+
+			foreach($forms as $form) {
+				if($form['post_type'] == $post->post_type) {
+					$key = get_post_meta($post->ID, 'acfcf-key', true);
+					$email_html = site_url() . '?acf-cf-email=' . $post->ID . '&key=' . $key;	
+											
+					if(!empty($form['template'])) {
+						$email_html = $email_html . '&template=' . $form['template'];
+					}
+					
+					if($form['no_email'] == false) {
+						echo '<p><a href="' . $email_html . '" target="_blank">Preview Admin Email</a></p>';
+					}
+					
+					
+					
+					$customeremail_html = site_url() . '?acf-cf-customeremail=' . $post->ID . '&key=' . $key;	
+					if(!empty($form['customertemplate'])) {
+						$customeremail_html = $customeremail_html . '&customertemplate=' . $form['customertemplate'];
+					} 
+					
+					if($form['no_customeremail'] == false) {
+						echo '<p><a href="' . $customeremail_html . '" target="_blank">Preview Customer Email</a></p>';
+					}
+					
+					
+				}	
 				
-				if($form['no_email'] == false) {
-					echo '<p><a href="' . $email_html . '" target="_blank">Preview Admin Email</a></p>';
-				}
-				
-				
-				
-				$customeremail_html = site_url() . '?acf-cf-customeremail=' . $post->ID . '&key=' . $key;	
-				if(!empty($form['customertemplate'])) {
-					$customeremail_html = $customeremail_html . '&customertemplate=' . $form['customertemplate'];
-				} 
-				
-				if($form['no_customeremail'] == false) {
-					echo '<p><a href="' . $customeremail_html . '" target="_blank">Preview Customer Email</a></p>';
-				}
-				
-				
-			}	
-			
+			}
 		}
+
 });
 
 
@@ -192,53 +193,48 @@ function acf_cf_akismet ($content) {
 
 
 function acf_cf_validate_spam( $valid, $value, $field, $input ) {
-	
-	
+
 	//check if it's an akismet field
 	
-	$class = $field['wrapper']['class'];
-	
-	if(strpos($class, 'akismet') !== false) {
-		// bail early if value is already invalid
-		if( !$valid ) {
+	if( array_key_exists('class', $field['wrapper']) ){
+		$class = $field['wrapper']['class'];
+
+		if(strpos($class, 'akismet') !== false) {
+			// bail early if value is already invalid
+			if( !$valid ) {
+				
+				return $valid;
+				
+			}
 			
-			return $valid;
+			if(!empty($value)) {
 			
+				$content = array();
+				if($class == 'akismet-message') {
+					$content['comment_content'] = $value;
+				} 
+				
+				else if ($class == 'akismet-email') {
+					$content['comment_author_email'] = $value;
+				}
+				
+				else if ($class == 'akismet-name') {
+					$content['comment_author'] = $value;
+				}
+				
+				else if ($class = 'akismet-url') {
+					$content['comment_author_url'] = $value;
+				}
+				
+				$isSpam = acf_cf_akismet($content);
+				
+				if($isSpam === TRUE || strpos($value, '<script') !== false ) {
+					$valid = 'Spam detected!';
+				}
+			}
 		}
-		
-		if(!empty($value)) {
-		
-			$content = array();
-			if($class == 'akismet-message') {
-				$content['comment_content'] = $value;
-			} 
-			
-			else if ($class == 'akismet-email') {
-				$content['comment_author_email'] = $value;
-			}
-			
-			else if ($class == 'akismet-name') {
-				$content['comment_author'] = $value;
-			}
-			
-			else if ($class = 'akismet-url') {
-				$content['comment_author_url'] = $value;
-			}
-			
-			$isSpam = acf_cf_akismet($content);
-			
-			if($isSpam === TRUE || strpos($value, '<script') !== false ) {
-				$valid = 'Spam detected!';
-			}
-			
-			
-		}
-		
-		
-		
 	}
-	
-			
+
 	return $valid;
 
 }
