@@ -103,10 +103,9 @@ add_action('acf/save_post', 'save_inquiry', 20);
 
 add_action('edit_form_after_title', function ( $post )
 {
-	
-      
 		$forms = get_field('forms','option');
-		
+		if($forms != null){
+
 		foreach($forms as $form) {
 			if($form['post_type'] == $post->post_type) {
 				$key = get_post_meta($post->ID, 'acfcf-key', true);
@@ -135,6 +134,8 @@ add_action('edit_form_after_title', function ( $post )
 			}	
 			
 		}
+		}
+
 });
 
 
@@ -196,9 +197,10 @@ function acf_cf_validate_spam( $valid, $value, $field, $input ) {
 	
 	//check if it's an akismet field
 	
-	$class = $field['wrapper']['class'];
-	
-	if(strpos($class, 'akismet') !== false) {
+	if( array_key_exists('class', $field['wrapper']) ){
+		$class = $field['wrapper']['class'];
+
+		if(strpos($class, 'akismet') !== false) {
 		// bail early if value is already invalid
 		if( !$valid ) {
 			
@@ -237,6 +239,9 @@ function acf_cf_validate_spam( $valid, $value, $field, $input ) {
 		
 		
 	}
+	}
+	
+	
 	
 			
 	return $valid;
