@@ -120,8 +120,8 @@ add_action('edit_form_after_title', function ( $post )
 {
 
 
-		$forms = get_field('forms','option');
-
+	$forms = get_field('forms','option');
+	if(is_array($forms)){
 		foreach($forms as $form) {
 			if($form['post_type'] == $post->post_type) {
 				$key = get_post_meta($post->ID, 'acfcf-key', true);
@@ -150,6 +150,7 @@ add_action('edit_form_after_title', function ( $post )
 			}
 
 		}
+	}
 });
 
 
