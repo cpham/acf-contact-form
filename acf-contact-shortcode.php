@@ -5,7 +5,7 @@
 
 		global $post;
 
-		if(has_shortcode( $post->post_content, 'acf_contact')) {
+		if(isset($post) && has_shortcode( $post->post_content, 'acf_contact')) {
 			acf_form_head();
 
 
